@@ -23,7 +23,7 @@ function pc {
     oldec=$?
     branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')
     if [ $? -eq 0 ]; then
-        echo -ne "$COLOR_LIGHT_CYAN$branch$COLOR_NC"
+        echo -ne "$COLOR_CYAN$branch$COLOR_NC"
     fi
     return $oldec
 }
@@ -36,7 +36,7 @@ export SVN_EDITOR="vim"
 export GIT_EDITOR="vim"
 export LANG=en_US.UTF-8
 
-export PS1="\n$COLOR_GREEN\u$COLOR_NC@$COLOR_PURPLE\h $COLOR_YELLOW\w\$(pc)\n\$(if [[ \$? == 0 ]]; then echo -ne \"$COLOR_GREEN\$?\"; else echo -ne \"$COLOR_RED\$?\"; fi)$COLOR_LIGHT_CYAN \$$COLOR_NC "
+export PS1="\n$COLOR_GREEN\u$COLOR_NC@$COLOR_PURPLE\h $COLOR_BROWN\w\$(pc)\n\$(if [[ \$? == 0 ]]; then echo -ne \"$COLOR_GREEN\$?\"; else echo -ne \"$COLOR_RED\$?\"; fi)$COLOR_LIGHT_CYAN \$$COLOR_NC "
 
 export PATH="$HOME/bin:$PATH"
 

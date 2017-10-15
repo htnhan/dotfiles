@@ -33,6 +33,7 @@ LS_COLORS='rs=0:di=00;36:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:c
 export LS_COLORS
 
 export SVN_EDITOR="vim"
+export GIT_EDITOR="vim"
 export LANG=en_US.UTF-8
 
 export PS1="\n$COLOR_GREEN\u$COLOR_NC@$COLOR_PURPLE\h $COLOR_YELLOW\w\$(pc)\n\$(if [[ \$? == 0 ]]; then echo -ne \"$COLOR_GREEN\$?\"; else echo -ne \"$COLOR_RED\$?\"; fi)$COLOR_LIGHT_CYAN \$$COLOR_NC "
@@ -40,7 +41,7 @@ export PS1="\n$COLOR_GREEN\u$COLOR_NC@$COLOR_PURPLE\h $COLOR_YELLOW\w\$(pc)\n\$(
 export PATH="$HOME/bin:$PATH"
 
 # aliases
-alias ls='ls  -h --color -al'
+alias ls='ls -h --color'
 alias vi='vim'
 alias tmux='tmux -2'
 alias grep='grep --color -n'

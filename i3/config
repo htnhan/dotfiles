@@ -1,7 +1,7 @@
 # Set key bindings
 set $mod Mod1
 set $WIN Mod4
-font pango:Linux Biolinum O 10
+font pango:artwiz Aqui 8
 floating_modifier $mod
 
 # exit i3 (logs you out of your X session)
@@ -91,9 +91,11 @@ bar {
     i3bar_command  i3bar
     status_command i3blocks -c $HOME/.config/i3/i3blocks.main.cfg
     workspace_buttons yes
-    font pango:Linux Biolinum 12
+    # font pango:Linux Biolinum O 10
+    # font pango:artwiz Snap 8
+    font pango:profont 10
     tray_padding 0
-    separator_symbol ":|:"
+    separator_symbol "|"
     binding_mode_indicator yes
     colors {
         background #0a0a0a

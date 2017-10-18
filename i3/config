@@ -1,13 +1,22 @@
-# Set key bindings
+#------------------------------------------------------------------------------
+# Global variables
+#------------------------------------------------------------------------------
 set $mod Mod1
 set $WIN Mod4
+
+# set $COLOR "#098a09"
+set $COLOR "#8a0909"
+set $MYGREY "#a0a0a0"
+set $MYBLACK "#0a0a0a"
+
+# global title fonts
 font pango:artwiz Aqui 8
-floating_modifier $mod
 
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "$HOME/bin/i3nag_quit.sh"
-bindsym $mod+Shift+q exec "$HOME/bin/i3nag_quit.sh"
+# shortcut to logout and poweroff. Nag to make sure it's not accidental
+bindsym $WIN+Shift+q exec "$HOME/bin/i3nag_quit.sh"
+bindsym $WIN+Shift+p exec "$HOME/bin/i3nag_poweroff.sh"
 
+# a bunch of bahavior bindings
 bindsym $mod+v split h
 bindsym $mod+Shift+v split v
 bindsym $mod+s layout stacking
@@ -17,26 +26,6 @@ bindsym $mod+Shift+space floating toggle
 bindsym $WIN+f fullscreen toggle
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-
-# commonly used shortcuts
-
-bindsym $WIN+c      kill
-bindsym $WIN+l exec "$HOME/bin/lockscreen"
-bindsym $WIN+space  exec dmenu_run
-bindsym $WIN+t      exec i3-sensible-terminal
-bindsym $WIN+w      kill
-
-# exec shortcut...less useful, but nice to have
-mode "exec (f)Firefox, (n)Nemo, (c)Chromium" {
-    bindsym e exec "nemo"
-    bindsym f exec "firefox"
-    bindsym c exec "chromium"
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $WIN+e mode "exec (f)Firefox, (n)Nemo, (c)Chromium"
 
 
 # focus stuffs, vi style
@@ -51,10 +40,11 @@ bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 
-# change focus between tiling / floating windows
+# floating window stuffs
 bindsym $mod+space focus mode_toggle
+floating_modifier $mod
 
-# focus the parent container
+# focus the parent container -- never used....
 bindsym $mod+a focus parent
 
 # workspace stuffs, fluxbox style
@@ -72,6 +62,11 @@ bindsym $WIN+F4 move container to workspace 4
 bindsym $WIN+F5 move container to workspace 5
 bindsym $WIN+F6 move container to workspace 6
 
+#------------------------------------------------------------------------------
+# Various modes
+# Try to match my fluxbox key shortcuts so I don't have to re-learn
+#------------------------------------------------------------------------------
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -86,32 +81,71 @@ mode "resize" {
 }
 bindsym $WIN+r mode "resize"
 
+mode "changeX (w)Work, (h)Home, (l)Laptop" {
+    bindsym w exec "$HOME/bin/chgx work"; mode "default"
+    bindsym h exec "$HOME/bin/chgx home"; mode "default"
+    bindsym w exec "$HOME/bin/chgx"; mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $WIN+x mode "changeX (w)Work, (h)Home, (l)Laptop"
+
+# exec shortcut...less useful, but nice to have
+mode "exec (f)Firefox, (n)Nemo, (c)Chromium" {
+    bindsym e exec "nemo"; mode "default";
+    bindsym f exec "firefox"; mode "default";
+    bindsym c exec "chromium"; mode "default";
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $WIN+e mode "exec (f)Firefox, (n)Nemo, (c)Chromium"
+
+# commonly used shortcuts
+bindsym $WIN+c      kill
+bindsym $WIN+l exec "$HOME/bin/lockscreen"
+bindsym $WIN+space  exec dmenu_run -l 25 \
+                                   -p "$ " \
+                                   -fn "artwiz Snap" \
+                                   -sb "$COLOR" \
+                                   -sf "#ffffff"
+bindsym $WIN+t      exec mate-terminal --hide-menubar
+bindsym $WIN+w      kill
+
+#------------------------------------------------------------------------------
 # bar stuffs
+#------------------------------------------------------------------------------
 bar {
     i3bar_command  i3bar
     status_command i3blocks -c $HOME/.config/i3/i3blocks.main.cfg
     workspace_buttons yes
-    # font pango:Linux Biolinum O 10
-    # font pango:artwiz Snap 8
     font pango:profont 10
     tray_padding 0
     separator_symbol "|"
     binding_mode_indicator yes
     colors {
-        background #0a0a0a
-        statusline #a0a0a0
+        background $MYBLACK
+        statusline $MYGREY
 
         # workspace         <border>    <bground>   <text>
-        focused_workspace   #098a09     #098a09     #ffffff
-        active_workspace    #098a09     #098a09     #ffffff
-        urgent_workspace    #8a0909     #8a0909     #ffffff
-        inactive_workspace  #0a0a0a     #0a0a0a     #a0a0a0
+        focused_workspace   $COLOR     $COLOR     #ffffff
+        active_workspace    $COLOR     $COLOR     #ffffff
+        urgent_workspace    #8a0909    #8a0909    #ffffff
+        inactive_workspace  $MYBLACK   $MYBLACK   $MYGREY
     }
 }
 
-# coloring -- green-ish
+#------------------------------------------------------------------------------
+# coloring.
 # <class>               <border>    <bground>   <text>  <indicator> <child>
-client.focused          #098a09     #098a09     #ffffff #098a09     #098a09
-client.focused_inactive #0a0a0a     #ffffff     #ffffff #ffffff     #0a0a0a
-client.unfocused        #0a0a0a     #0a0a0a     #a0a0a0 #0a0a0a     #0a0a0a
-client.urgent           #098a09     #098a09     #ffffff #098a09     #098a09
+#------------------------------------------------------------------------------
+client.focused          $COLOR      $COLOR      #ffffff $COLOR      $COLOR
+client.focused_inactive $MYBLACK    #ffffff     #ffffff #ffffff     $MYBLACK
+client.unfocused        $MYBLACK    $MYBLACK    $MYGREY $MYBLACK    $MYBLACK
+client.urgent           $COLOR      $COLOR      #ffffff $COLOR      $COLOR
+
+# startup stuffs
+exec --no-startup-id feh --bg-fill ~/.wallpaper.img

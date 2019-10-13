@@ -4,17 +4,17 @@
 set $mod Mod1
 set $WIN Mod4
 
-# set $COLOR "#098a09"
-set $COLOR "#8a0909"
+set $COLOR "#098a09"
+#set $COLOR "#8a0909"
 set $MYGREY "#a0a0a0"
 set $MYBLACK "#0a0a0a"
 
 # global title fonts
-font pango:artwiz Aqui 8
+#font pango:artwiz Aqui 8
+font pango:Linux Biolinum Bold 12
 
 # shortcut to logout and poweroff. Nag to make sure it's not accidental
 bindsym $WIN+Shift+q exec "$HOME/bin/i3nag_quit.sh"
-bindsym $WIN+Shift+p exec "$HOME/bin/i3nag_poweroff.sh"
 
 # a bunch of bahavior bindings
 bindsym $mod+v split h
@@ -122,7 +122,7 @@ bar {
     i3bar_command  i3bar
     status_command i3blocks -c $HOME/.config/i3/i3blocks.main.cfg
     workspace_buttons yes
-    font pango:profont 10
+    font pango:Linux Biolinum Bold 10
     tray_padding 0
     separator_symbol "|"
     binding_mode_indicator yes

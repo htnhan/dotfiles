@@ -32,21 +32,21 @@ static main(void) {
             || currentMnem == "in" || currentMnem == "cpuid")
             SetColor(currentEA, CIC_ITEM, 0xFFFF00);
 
-    //Highlight interrupts in code as an anti-debugging measure
-    if (currentMnem == "int" &&
-        (GetOpnd(currentEA, 0) == "3" || GetOpnd(currentEA, 0) == "2D")) {
-        SetColor(currentEA, CIC_ITEM, 0xFFFF00);
-    }
+        //Highlight interrupts in code as an anti-debugging measure
+        if (currentMnem == "int" &&
+            (GetOpnd(currentEA, 0) == "3" || GetOpnd(currentEA, 0) == "2D")) {
+            SetColor(currentEA, CIC_ITEM, 0xFFFF00);
+        }
 
-    //Highlight other instructions sometimes used for anti-debugging
-    if (currentMnem == "rdtsc" || currentMnem == "icebp") {
-        SetColor(currentEA, CIC_ITEM, 0xFFFF00);
-    }
-    //Highlight push/ret combinations as a shellcode
-    if (currentMnem == "ret" && prevMnem == "push")
-        SetColor(currentEA, CIC_ITEM, 0xFFFF00);
+        //Highlight other instructions sometimes used for anti-debugging
+        if (currentMnem == "rdtsc" || currentMnem == "icebp") {
+            SetColor(currentEA, CIC_ITEM, 0xFFFF00);
+        }
+        //Highlight push/ret combinations as a shellcode
+        if (currentMnem == "ret" && prevMnem == "push")
+            SetColor(currentEA, CIC_ITEM, 0xFFFF00);
 
-    currentEA = NextHead(currentEA, BADADDR);
-    prevMnem = currentMnem;
+        currentEA = NextHead(currentEA, BADADDR);
+        prevMnem = currentMnem;
     }
 }

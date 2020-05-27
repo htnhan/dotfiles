@@ -94,13 +94,16 @@ def nopit(start, end=None):
     return 0
 
 
-PTRSIZE = 0x04
-#PTRSIZE = 0x08
-DEFAULT = 'VTABLE_'
-FLAGS = (FF_DWRD|FF_DATA) & 0xFFFFFFFF
-
-
 def mkvtable(name, vtblref, count):
+    FLAGS = (FF_DWRD|FF_DATA) & 0xFFFFFFFF
+    is64 = idaapi.get_inf_structure().is_64bit()
+    if is64:
+        fn = Qword
+        addrsize = 8
+    else:
+        fn = Dword
+        addrsize = 4
+
     msid = AddStrucEx(-1, name, 0)
     print 'added', hex(msid), type(msid)
     if msid == 0xFFFFFFFF:
@@ -108,12 +111,11 @@ def mkvtable(name, vtblref, count):
         return
 
     for _ in xrange(count):
-        offset = _ * PTRSIZE
-        addr = hex(Dword(vtblref + offset))[:-1]
-        # addr = hex(Qword(vtblref + offset))[:-1]
-        membername = 'field_%x' % (_,)
+        offset = _ * addrsize
+        addr = hex(fn(vtblref + offset))[:-1]
+        membername = 'field_%x' % (offset,)
         print 'adding member:', membername,
-        rc = AddStrucMember(msid, membername, -1, FLAGS, -1, PTRSIZE)
+        rc = AddStrucMember(msid, membername, -1, FLAGS, -1, addrsize)
         print hex(rc)
         SetMemberComment(msid, offset, addr, 1)
 

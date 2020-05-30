@@ -32,12 +32,12 @@ that windbg fails to display):
 0050fe98 3fe019f4 VERSION!GetFileVersionInfoW
 0050fe9c 3fe01b51 VERSION!VerQueryValueW
 '''
+import idaapi
 import logging
 import idc
 
 FNAME='struct.txt'
 STRUCTNAME = 'Struct'
-FLAGS = (FF_DWRD|FF_DATA) & 0xFFFFFFFF
 PTRSIZE = 4
 
 
@@ -75,7 +75,7 @@ def process_file(fname):
     return result
 
 
-def fix_fields(infields, field_size=4):
+def fix_fields(infields, ptrsize):
     '''
     Handle the case where the struct has gaps within its field. This happens
     when there is an entry that fails to parse. Process like this:
@@ -90,18 +90,18 @@ def fix_fields(infields, field_size=4):
     newfields = list()
     while len(fields) > 0:
         _ea, offset, name = fields.pop()
-        cur_offset = count * field_size
+        cur_offset = count * ptrsize
         while cur_offset < offset:
             cur_name = 'field_%x' % (cur_offset,)
             newfields.append((-1, cur_offset, cur_name))
             count += 1
-            cur_offset = count * field_size
+            cur_offset = count * ptrsize
         newfields.append((_ea, offset, name))
         count += 1
     return newfields
 
 
-def make_struct(struct_name, fields):
+def make_struct(struct_name, fields, flags, ptrsize):
     '''
     Make a struct: Simply go through each entry and make a name. Didn't test
     what happens when there is a name collision...
@@ -112,14 +112,21 @@ def make_struct(struct_name, fields):
         return -1
 
     for _ea, offset, name in fields:
-        AddStrucMember(msid, name, -1, FLAGS, -1, PTRSIZE)
+        AddStrucMember(msid, name, -1, flags, -1, ptrsize)
     return 0
 
 
 def main():
+    is64 = idaapi.get_inf_structure().is_64bit()
+    if is64:
+        flags = FF_QWORD & 0xFFFFFFFF
+        ptrsize = 0x08
+    else:
+        flags = FF_DWORD & 0xFFFFFFFF
+        ptrsize = 0x04
     result = process_file(FNAME)
-    result = fix_fields(result)
-    make_struct(STRUCTNAME, result)
+    result = fix_fields(result, ptrsize)
+    make_struct(STRUCTNAME, result, flags, ptrsize)
     return 0
 
 

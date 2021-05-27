@@ -6,14 +6,14 @@ def hightlight_jmpregs():
     '''Hightlight calls to registers'''
     OPTYPE_REGISTER = 0x1
     COLOR = 0x000077
-    heads = Heads(SegStart(ScreenEA()), SegEnd(ScreenEA()))
+    heads = Heads(idc.get_segm_start(idc.get_screen_ea()), idc.get_segm_end(idc.get_screen_ea()))
     for ea in heads:
-        if not GetMnem(ea) == 'jmp':
+        if not idc.print_insn_mnem(ea) == 'jmp':
             continue
-        if GetOpType(ea, 0) == OPTYPE_REGISTER:
-            SetColor(ea, CIC_ITEM, COLOR)
+        if idc.get_operand_type(ea, 0) == OPTYPE_REGISTER:
+            idc.set_color(ea, CIC_ITEM, COLOR)
             print 'Call to register at 0x%08x: %s %s' % (
-                    ea, GetMnem(ea), GetOpnd(ea, 0))
+                    ea, idc.print_insn_mnem(ea), idc.print_operand(ea, 0))
     return
 
 
@@ -21,24 +21,24 @@ def hightlight_antivms():
     '''Hightlight anti-vm x86 instructions. These are very uncommon in
     most benign code'''
     COLOR = 0x000077
-    heads = Heads(SegStart(ScreenEA()), SegEnd(ScreenEA()))
+    heads = Heads(idc.get_segm_start(idc.get_screen_ea()), idc.get_segm_end(idc.get_screen_ea()))
     antivm_instructions = set(['sidt', 'sgdt', 'sldt',
                                'smsw', 'str', 'in', 'cpuid'])
     for ea in heads:
-        if GetMnem(ea).lower() in antivm_instructions:
+        if idc.print_insn_mnem(ea).lower() in antivm_instructions:
             print "Detect anti-vm at 0x%08x" % (ea)
-            SetColor(ea, CIC_ITEM, COLOR)
+            idc.set_color(ea, CIC_ITEM, COLOR)
     return 0
 
 
 def hightlight_calls():
     '''Hightlight all calls, with dark background'''
     COLOR = 0x000077
-    heads = Heads(SegStart(ScreenEA()), SegEnd(ScreenEA()))
+    heads = Heads(idc.get_segm_start(idc.get_screen_ea()), idc.get_segm_end(idc.get_screen_ea()))
     print 'hightlight calls called'
     for h in heads:
-        if GetMnem(h) == 'call':
-            SetColor(h, CIC_ITEM, COLOR)
+        if idc.print_insn_mnem(h) == 'call':
+            idc.set_color(h, CIC_ITEM, COLOR)
 
     return 0
 
@@ -47,14 +47,14 @@ def hightlight_peb():
     '''Highlight SEH setup on stack
     '''
     COLOR = 0x000077
-    heads = Heads(SegStart(ScreenEA()), SegEnd(ScreenEA()))
+    heads = Heads(idc.get_segm_start(idc.get_screen_ea()), idc.get_segm_end(idc.get_screen_ea()))
     for ea in heads:
-        op0, op1 = GetOpnd(ea, 0), GetOpnd(ea, 1)
+        op0, op1 = idc.print_operand(ea, 0), idc.print_operand(ea, 1)
         if 'fs:' in op0.lower() or 'fs:' in op1.lower():
-            SetColor(ea, CIC_ITEM, COLOR)
+            idc.set_color(ea, CIC_ITEM, COLOR)
             print 'Accessing fs at 0x%x' % (ea,)
         elif 'gs:' in op0.lower() or 'gs:' in op1.lower():
-            SetColor(ea, CIC_ITEM, COLOR)
+            idc.set_color(ea, CIC_ITEM, COLOR)
             print 'Accessing gs at 0x%x' % (ea,)
     return
 
@@ -62,24 +62,24 @@ def hightlight_peb():
 def hightlight_xor():
     '''Highlight XOR operation, really common and useful
     '''
-    heads = Heads(SegStart(ScreenEA()), SegEnd(ScreenEA()))
+    heads = Heads(idc.get_segm_start(idc.get_screen_ea()), idc.get_segm_end(idc.get_screen_ea()))
     COLOR = 0x005757
     print 'hightlight calls called'
     for h in heads:
-        if GetMnem(h) == 'xor':
-            SetColor(h, CIC_ITEM, COLOR)
+        if idc.print_insn_mnem(h) == 'xor':
+            idc.set_color(h, CIC_ITEM, COLOR)
 
     return 0
 
 
 def reset_color():
     '''reset all colors'''
-    heads = Heads(SegStart(ScreenEA()), SegEnd(ScreenEA()))
+    heads = Heads(idc.get_segm_start(idc.get_screen_ea()), idc.get_segm_end(idc.get_screen_ea()))
     print 'hightlight calls called'
     COLOR = 0x0
     for h in heads:
-        if GetMnem(h) == 'xor':
-            SetColor(h, CIC_ITEM, COLOR)
+        if idc.print_insn_mnem(h) == 'xor':
+            idc.set_color(h, CIC_ITEM, COLOR)
 
     return 0
 

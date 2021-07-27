@@ -1,20 +1,18 @@
 #------------------------------------------------------------------------------
 # Global variables
 #------------------------------------------------------------------------------
+
 set $mod Mod1
 set $WIN Mod4
 
-set $COLOR "#098a09"
-#set $COLOR "#8a0909"
+#set $COLOR "#098a09"
+set $COLOR "#8a0909"
 set $MYGREY "#a0a0a0"
 set $MYBLACK "#0a0a0a"
 
 # global title fonts
 #font pango:artwiz Aqui 8
-font pango:Linux Biolinum Bold 12
-
-# shortcut to logout and poweroff. Nag to make sure it's not accidental
-bindsym $WIN+Shift+q exec "$HOME/bin/i3nag_quit.sh"
+font pango:Linux Biolinum Bold 10
 
 # a bunch of bahavior bindings
 bindsym $mod+v split h
@@ -48,23 +46,43 @@ floating_modifier $mod
 bindsym $mod+a focus parent
 
 # workspace stuffs, fluxbox style
-bindsym $mod+F1 workspace 1
-bindsym $mod+F2 workspace 2
-bindsym $mod+F3 workspace 3
-bindsym $mod+F4 workspace 4
-bindsym $mod+F5 workspace 5
-bindsym $mod+F6 workspace 6
+set $ws1 "1: "
+set $ws2 "2: "
+set $ws3 "3: "
+set $ws4 "4: "
+set $ws5 "5: "
+set $ws6 "6: "
+set $ws7 "7: "
 
-bindsym $WIN+F1 move container to workspace 1
-bindsym $WIN+F2 move container to workspace 2
-bindsym $WIN+F3 move container to workspace 3
-bindsym $WIN+F4 move container to workspace 4
-bindsym $WIN+F5 move container to workspace 5
-bindsym $WIN+F6 move container to workspace 6
+bindsym $mod+F1 workspace $ws1
+bindsym $mod+F2 workspace $ws2
+bindsym $mod+F3 workspace $ws3
+bindsym $mod+F4 workspace $ws4
+bindsym $mod+F5 workspace $ws5
+bindsym $mod+F6 workspace $ws6
+bindsym $mod+F7 workspace $ws7
+
+bindsym $WIN+F1 move container to workspace $ws1
+bindsym $WIN+F2 move container to workspace $ws2
+bindsym $WIN+F3 move container to workspace $ws3
+bindsym $WIN+F4 move container to workspace $ws4
+bindsym $WIN+F5 move container to workspace $ws5
+bindsym $WIN+F6 move container to workspace $ws6
+bindsym $WIN+F7 move container to workspace $ws7
+
+#-----------------------------------------------------------------------------
+# Assignments
+#-----------------------------------------------------------------------------
+assign [class="Firefox"] $ws3
 
 #------------------------------------------------------------------------------
 # Various modes
 # Try to match my fluxbox key shortcuts so I don't have to re-learn
+#------------------------------------------------------------------------------
+
+
+#------------------------------------------------------------------------------
+# Windows specific settings
 #------------------------------------------------------------------------------
 
 # resize window (you can also use the mouse for that)
@@ -93,23 +111,27 @@ mode "changeX (w)Work, (h)Home, (l)Laptop" {
 bindsym $WIN+x mode "changeX (w)Work, (h)Home, (l)Laptop"
 
 # exec shortcut...less useful, but nice to have
-mode "exec (f)Firefox, (n)Nemo, (c)Chromium" {
-    bindsym e exec "nemo"; mode "default";
+mode "exec (e)Explorer, (v)VMWorkstation" {
+    bindsym e exec "pcmanfm-qt"; mode "default";
     bindsym f exec "firefox"; mode "default";
     bindsym c exec "chromium"; mode "default";
+    bindsym v exec "vmware"; mode "default";
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $WIN+e mode "exec (f)Firefox, (n)Nemo, (c)Chromium"
+bindsym $WIN+e mode "exec (e)Explorer, (v)VMWorkstation"
 
 # commonly used shortcuts
+# shortcut to logout and poweroff. Nag to make sure it's not accidental
+bindsym $WIN+Shift+q exec lxqt-leave
+
 bindsym $WIN+c      kill
 bindsym $WIN+l exec "$HOME/bin/lockscreen"
 bindsym $WIN+space  exec dmenu_run -l 25 \
                                    -p "$ " \
-                                   -fn "artwiz Snap" \
+                                   -fn "Linux Libertine Mono O" \
                                    -sb "$COLOR" \
                                    -sf "#ffffff"
 bindsym $WIN+t      exec mate-terminal --hide-menubar
@@ -121,8 +143,10 @@ bindsym $WIN+w      kill
 bar {
     i3bar_command  i3bar
     status_command i3blocks -c $HOME/.config/i3/i3blocks.main.cfg
+    position top
     workspace_buttons yes
-    font pango:Linux Biolinum Bold 10
+    # font pango:Linux Biolinum Bold 10
+    font pango:Font Awesome 5 Brands Regular 12px
     tray_padding 0
     separator_symbol "|"
     binding_mode_indicator yes

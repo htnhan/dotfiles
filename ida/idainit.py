@@ -90,7 +90,7 @@ def nopit(start, end=None):
     for _ in xrange(start, end):
         idaapi.patch_byte(_, 0x90)
         idaapi.autoMark(_, idaapi.AU_CODE)
-    idc.Refresh()
+    ida_kernwin.refresh_idaview_anyway()
     return 0
 
 
@@ -104,7 +104,7 @@ def mkvtable(name, vtblref, count):
         fn = Dword
         addrsize = 4
 
-    msid = AddStrucEx(-1, name, 0)
+    msid = idc.add_struc(-1, name, 0)
     print 'added', hex(msid), type(msid)
     if msid == 0xFFFFFFFF:
         print 'failed'
@@ -115,9 +115,9 @@ def mkvtable(name, vtblref, count):
         addr = hex(fn(vtblref + offset))[:-1]
         membername = 'field_%x' % (offset,)
         print 'adding member:', membername,
-        rc = AddStrucMember(msid, membername, -1, FLAGS, -1, addrsize)
+        rc = idc.add_struc_member(msid, membername, -1, FLAGS, -1, addrsize)
         print hex(rc)
-        SetMemberComment(msid, offset, addr, 1)
+        idc.set_member_cmt(msid, offset, addr, 1)
 
 
 def help():

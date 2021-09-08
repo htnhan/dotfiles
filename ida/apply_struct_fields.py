@@ -106,13 +106,13 @@ def make_struct(struct_name, fields, flags, ptrsize):
     Make a struct: Simply go through each entry and make a name. Didn't test
     what happens when there is a name collision...
     '''
-    msid = AddStrucEx(-1, struct_name, 0)
+    msid = idc.add_struc(-1, struct_name, 0)
     if msid == 0xFFFFFFFF:
         logging.error('Failed to create struct %s' % (struct_name,))
         return -1
 
     for _ea, offset, name in fields:
-        AddStrucMember(msid, name, -1, flags, -1, ptrsize)
+        idc.add_struc_member(msid, name, -1, flags, -1, ptrsize)
     return 0
 
 

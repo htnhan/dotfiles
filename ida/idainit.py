@@ -64,7 +64,7 @@ def hightlight_xor():
     '''
     heads = Heads(idc.get_segm_start(idc.get_screen_ea()), idc.get_segm_end(idc.get_screen_ea()))
     COLOR = 0x005757
-    print "hightlight calls called"
+    print ("hightlight calls called")
     for h in heads:
         if idc.print_insn_mnem(h) == "xor":
             idc.set_color(h, CIC_ITEM, COLOR)

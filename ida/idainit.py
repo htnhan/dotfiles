@@ -107,7 +107,7 @@ def mkvtable(name, vtblref, count):
     msid = idc.add_struc(-1, name, 0)
     print ("added", hex(msid), type(msid))
     if msid == 0xFFFFFFFF:
-        print "failed"
+        print ("failed")
         return
 
     for _ in xrange(count):
@@ -121,9 +121,9 @@ def mkvtable(name, vtblref, count):
 
 
 def help():
-    print "reset_color()"
-    print "nopit(start, end)"
-    print "mkvtable(name, vtblref, count)"
+    print ("reset_color()")
+    print ("nopit(start, end)")
+    print ("mkvtable(name, vtblref, count)")
 
 def main():
     reset_color()

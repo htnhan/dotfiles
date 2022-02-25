@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Don't do anything if we are not interactive
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
 export COLOR_NC="\001$(tput sgr0)\002"
 export COLOR_WHITE="\001$(tput bold; tput setaf 7)\002"
 export COLOR_BLACK="\001$(tput setaf 0)\002"

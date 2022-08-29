@@ -44,7 +44,6 @@ export GIT_EDITOR="vim"
 export LANG=en_US.UTF-8
 
 export PS1="\n$COLOR_GREEN\u$COLOR_NC@$COLOR_PURPLE\h $COLOR_BROWN\w\$(pc)\n\$(if [[ \$? == 0 ]]; then echo -ne \"$COLOR_GREEN\$?\"; else echo -ne \"$COLOR_RED\$?\"; fi)$COLOR_LIGHT_CYAN \$$COLOR_NC "
-
 export PATH="$HOME/bin:$PATH"
 
 # aliases
@@ -66,3 +65,5 @@ function mgrep() {
         $GREP -i $@ |pandoc |lynx -stdin
     fi
 }
+
+[ -n "$TMUX" ] && export TERM=screen-256color

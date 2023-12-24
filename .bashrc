@@ -26,6 +26,11 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# add fzf key binding
+if [ -f $HOME/dev/fzf/shell/key-bindings.bash ]; then
+  . $HOME/dev/fzf/shell/key-bindings.bash
+fi
+
 # enable programmable completion features
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -57,6 +62,15 @@ export COLOR_BROWN="\001$(tput setaf 3)\002"
 export COLOR_YELLOW="\001$(tput bold; tput setaf 3)\002"
 export COLOR_GRAY="\001$(tput setaf 0)\002"
 export COLOR_LIGHT_GRAY="\001$(tput bold; tput setaf 0)\002"
+
+
+export FZF_DEFAULT_OPTS="--height 60% \
+--border sharp \
+--layout reverse \
+--preview 'batcat --color=always --paging=never --theme=gruvbox-dark {}' \
+--prompt '∷ ' \
+--pointer ▶ \
+--marker ⇒"
 
 function pc {
     # Store old error code

@@ -31,7 +31,7 @@ call matchadd('ColorColumn', '\%99v', 100)
 call matchadd('ColorColumn', '\%119v', 100)
 
 autocmd BufWritePre * :silent %s/\s\+$//e
-autocmd BufWritePre * :silent %s/\t/    /e
+"autocmd BufWritePre * :silent %s/\t/    /e
 
 syn keyword cTodo contained TODO XXX FIXME
 augroup HighlightTodo

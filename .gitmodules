@@ -1,0 +1,18 @@
+[submodule ".vim/onedark.vim"]
+	path = .vim/autoload/onedark.vim
+	url = https://github.com/joshdick/onedark.vim
+[submodule ".vim/bundle/fzf.vim"]
+	path = .vim/bundle/fzf.vim
+	url = https://github.com/junegunn/fzf.vim
+[submodule ".vim/bundle/hexmode"]
+	path = .vim/bundle/hexmode
+	url = https://github.com/fidian/hexmode.git
+[submodule ".vim/bundle/lightline.vim"]
+	path = .vim/bundle/lightline.vim
+	url = https://github.com/itchyny/lightline.vim
+[submodule ".vim/bundle/vim-polyglot"]
+	path = .vim/bundle/vim-polyglot
+	url = https://github.com/sheerun/vim-polyglot
+[submodule ".vim/bundle/fzf"]
+	path = .vim/bundle/fzf
+	url = https://github.com/junegunn/fzf

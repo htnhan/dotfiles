@@ -111,12 +111,13 @@ export PS1="\n$COLOR_GREEN\u$COLOR_NC@$COLOR_PURPLE\h $COLOR_BROWN\w\$(pc)\n\$(i
 export PATH="$HOME/bin:$PATH"
 
 # aliases
-alias ls='exa'
-alias ll='exa -al'
+alias ls='eza'
+alias ll='ls -al'
 alias bcat='batcat'
 alias vi='vim'
 alias tmux='tmux -2 -u'
 alias grep='grep --color=auto'
+alias llg='ll|grep'
 #alias shred='shred -vuz -n 26'
 alias shred="rm -v"
 alias xxd='xxd -g 1'

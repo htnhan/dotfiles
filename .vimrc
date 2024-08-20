@@ -17,10 +17,10 @@ filetype plugin indent on
 let g:hexmode_patterns='*.bin,*.dat,*.hex,*.x86,*.x64'
 let g:hexmode_xxd_options='-g 1'
 
-colorscheme onedark
-let g:lightline = {
-  \ 'colorscheme': 'onedark',
-  \ }
+"colorscheme onedark
+"let g:lightline = {
+"  \ 'colorscheme': 'onedark',
+"  \ }
 
 " create a function to highlight specific color...
 highlight ColorColumn ctermbg=red

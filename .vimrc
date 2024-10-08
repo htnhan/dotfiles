@@ -9,6 +9,16 @@ set laststatus=2
 set dir=$HOME/.vim/tmp " tmp dir to manage all the swap files
 set bg=dark            " dark background please
 
+" --------- fold stuff ---------------------------------------------------
+set foldmethod=syntax
+hi  Folded ctermfg=152
+hi  Folded ctermbg=58
+"hi Fodled ctermbg=52
+
+nnoremap <space> za
+vnoremap <space> zf
+
+
 " pathogen options -  https://github.com/tpope/vim-pathogen/
 execute pathogen#infect()
 filetype plugin indent on
